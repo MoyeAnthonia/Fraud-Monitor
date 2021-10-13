@@ -1,0 +1,168 @@
+<div class="container-fluid">
+
+    <div class="row mx-0" style="align-items: baseline;">
+        <p class="mr-2 time-head">Current Time:</p>
+        <p class="time-value" [id]="'timer'">{{date | date : 'yyyy-MM-dd h:mm a'}}</p>
+    </div>
+
+    <div class="row">
+        <div class="col status-bar no-click">
+          <mdb-card style="border: none;">
+            <mdb-card-body [style.height.rem]="'8'" [style.padding]="'0'" class="card-1">
+              <div class="pt-4 pb-2" [style.text-align]="'center'">
+                <div class="summary-text">Agents</div>
+                <div  class="container summary-value">{{agent_count || "N/A"}}</div>
+              </div>
+              <div class="trans-text">Total Transactions
+                <i class="vol-text">Volume</i>
+              </div>
+              <div class="trans-value" spinnerType="small" *ngIf="isLoading == false"> ₦ {{agent_totalVal || "N/A"}}
+                <i class="vol-value">{{agent_totalVol || "N/A"}}</i>
+              </div>
+            </mdb-card-body>
+          </mdb-card>
+        </div>
+        <div class="col status-bar">
+          <mdb-card style="border: none;">
+            <mdb-card-body [style.height.rem]="'8'" [style.padding]="'0'" class="card-3">
+              <div class="pt-4 pb-2" [style.text-align]="'center'">
+                <div class="summary-text"> B2B</div>
+                <div  class="container summary-value">{{b2b_count || "N/A" }}</div>
+              </div>
+              <div class="trans-text">Total Transactions
+                <i class="vol-text">Volume</i>
+              </div>
+              <div class="trans-value" *ngIf="isLoading == false">₦ {{b2b_totalVal || "N/A"}}
+                <i class="vol-value">{{b2b_totalVol || "N/A"}}</i>
+              </div> 
+            </mdb-card-body>
+          </mdb-card>
+        </div>
+        <div class="col status-bar">
+          <mdb-card style="border: none;">
+            <mdb-card-body [style.height.rem]="'8'" [style.padding]="'0'" class="card-3">
+              <div class="pt-4 pb-2" [style.text-align]="'center'">
+                <div class="summary-text"> B2BR</div>
+                <div  class="container summary-value">{{b2br_count || "N/A" }}</div>
+              </div>
+              <div class="trans-text">Total Transactions
+                <i class="vol-text">Volume</i>
+              </div>
+              <div class="trans-value" *ngIf="isLoading == false">₦ {{b2br_totalVal || "N/A"}}
+                <i class="vol-value">{{b2br_totalVol || "N/A"}}</i>
+              </div> 
+            </mdb-card-body>
+          </mdb-card>
+        </div>
+        <div class="col status-bar">
+          <mdb-card style="border: none;">
+            <mdb-card-body [style.height.rem]="'8'" [style.padding]="'0'" class="card-2">
+              <div class="pt-4 pb-2" [style.text-align]="'center'">
+                <div class="summary-text"> Users</div>
+                <div  class="container summary-value">{{users_count || "N/A" }}</div>      
+              </div>
+              <div class="trans-text">Total Transactions
+                <i class="vol-text">Volume</i>
+              </div>
+              <div class="trans-value" spinnerType="small" *ngIf="isLoading == false"> ₦ {{users_totalVal || "N/A"}}
+                <i class="vol-value">{{users_totalVol || "N/A"}}</i>
+              </div> 
+            </mdb-card-body>
+          </mdb-card>
+        </div>
+        <div  class="col status-bar" >
+          <mdb-card style="border: none;">
+            <mdb-card-body [style.height.rem]="'8'" [style.padding]="'0'" class="card-4">
+              <div class="pt-4 pb-2" [style.text-align]="'center'">
+                <div class="summary-text"> Staff</div>
+                <div  class="container summary-value">{{staff_count || "N/A" }}</div>
+              </div>
+              <div class="trans-text">Total Transactions
+                <i class="vol-text">Volume</i>
+              </div>
+              <div class="trans-value" *ngIf="isLoading == false">₦ {{staff_totalVal || "N/A"}}
+                <i class="vol-value">{{staff_totalVol || "N/A"}}</i>
+              </div> 
+            </mdb-card-body>
+          </mdb-card>
+        </div>
+        <div class="col status-bar">
+          <mdb-card style="border: none;">
+            <mdb-card-body [style.height.rem]="'8'" [style.padding]="'0'" class="card-5">
+              <div class="pt-4 pb-2" [style.text-align]="'center'">
+                <div class="summary-text"> None</div>
+                <div  class="container summary-value">{{none_count || "N/A" }}</div>
+              </div>
+              <div class="trans-text">Total Transactions
+                <i class="vol-text">Volume</i>
+              </div>
+              <div class="trans-value" *ngIf="isLoading == false"> ₦ {{none_totalVal || "N/A" }}
+                <i class="vol-value">{{none_totalVol || "N/A" }}</i>
+              </div> 
+            </mdb-card-body>
+          </mdb-card>
+        </div>
+      </div>
+<br>
+    <form [formGroup]="searchForm">
+<div class="row" style="justify-content: flex-end;">
+    <mat-form-field>
+        <mat-select placeholder="Sort By" (selectionChange)="SortType($event)" 
+        formControlName="sortOptions">
+        <mat-option *ngFor="let options of sortSelect" [value]="options.value" >{{options.label}}
+        </mat-option>
+    </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-select placeholder="Order By" (selectionChange)="OrderType($event)" 
+        formControlName="orderOptions">
+        <mat-option *ngFor="let options of orderSelect" [value]="options.value" >{{options.label}}
+        </mat-option>
+    </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-select placeholder="Search Option" (selectionChange)="type($event)" 
+        formControlName="selectOptions">
+        <mat-option *ngFor="let options of optionsSelect" [value]="options.value" >{{options.label}}
+        </mat-option>
+    </mat-select>
+    </mat-form-field>
+
+    <input
+    *ngIf="changeinuput !== 'last_txn_date_30' && changeinuput !== 'user_type' && changeinuput !== 'last_txn_date_40'"
+    id="input" type="text" value="" formControlName="selectedOption">
+    <mat-form-field *ngIf="changeinuput == 'user_type'">
+        <mat-select placeholder="Select User Type" (selectionChange)="typeUser($event)"
+            formControlName="selectedOption">
+            <mat-option *ngFor="let options of userType" [value]="options.value">{{options.label}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <input *ngIf="changeinuput == 'last_txn_date_30'" id="input" type="date" value=""
+                        formControlName="startDate">
+                    <input *ngIf="changeinuput == 'last_txn_date_40'" id="input" type="date" value=""
+                        formControlName="startDate40">
+
+                        <input *ngIf="changeinuput !== 'last_txn_date_30' && changeinuput !== 'last_txn_date_40'" id="input"
+                        type="text" value="" formControlName="selectedOption" disabled>
+                    <input *ngIf="changeinuput == 'last_txn_date_30'" id="input" type="date" value=""
+                        formControlName="endDate">
+                    <input *ngIf="changeinuput == 'last_txn_date_40'" id="input" type="date" value=""
+                        formControlName="endDate40">
+                        <button class="btn-standard" (click)="filters()"> Filter</button>
+                        <button class="btn-standard" style="background: white; color: black;" (click)="export()"> Export Data
+                    <i *ngIf="isExport == false" class="fa fa-spinner fa-spin"></i>
+                         </button>
+</div>
+    </form>
+      
+
+    <app-pagination *ngIf="data" [total]="total" [start]="serial" [end]="end" [event]="status"></app-pagination>
+    <!-- <mdb-spinner  spinnerType="big" spinnerColor="blue">
+    </mdb-spinner> -->
+    <app-table [headers]="headers" [datas]="data" [ordered_data]="ordered_data" [serial]="serial"></app-table>
+
+    <app-pagination *ngIf="data" [total]="total" [start]="serial" [end]="end" [event]="status"></app-pagination>
+</div>

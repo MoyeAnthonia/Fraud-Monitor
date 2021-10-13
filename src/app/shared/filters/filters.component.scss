@@ -1,0 +1,13 @@
+input[type=text],input[type=date], select{
+    text-align: unset;
+
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+input[type=text], input[type=date]{
+    width: 13rem !important;
+
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}

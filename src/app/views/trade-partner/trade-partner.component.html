@@ -1,0 +1,163 @@
+<div class="container-fluid">
+
+  <div class="row mx-0" style="align-items: baseline;">
+    <p class="mr-2 time-head">Current Time:</p>
+    <p class="time-value" [id]="'timer'">{{date | date : 'yyyy-MM-dd h:mm a'}}</p>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-body">
+          <mdb-spinner spinnerColor="blue" *ngIf="isLoading" class="loader-icon"></mdb-spinner>
+          <table class="table no-header table-borderless table-sm">
+            <tbody class="no-change" *ngIf="isLoading == false">
+              <tr>
+                <td>Name: </td>
+                <td style="font-weight: 600;">{{ name || "Not Available"}}</td>
+              </tr>
+              <tr>
+                <td>Address: </td>
+                <td style="font-weight: 600;">{{address || "Not Available"}}</td>
+              </tr>
+              <tr>
+                <td>Region:</td>
+                <td style="font-weight: 600;">N/A</td>
+              </tr>
+              <tr>
+              <td>Phone No:</td>
+              <td style="font-weight: 600;">{{phone || "Not Available"}}</td>
+              </tr>
+              <tr>
+                <td>Date Created:</td>
+                <td style="font-weight: 600;">{{date_created | date: 'short' || "Not Available"}}</td>
+              </tr>
+
+            </tbody>
+         
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card">
+        <div class="card-body">
+          <mdb-spinner spinnerColor="blue" *ngIf="isLoading" class="loader-icon"></mdb-spinner>
+          <table class="table no-header table-borderless table-sm">
+            <tbody class="no-change" *ngIf="isLoading == false">
+              <tr>
+                <td>Total Agents: </td>
+                <td style="font-weight: 600;">{{ agent_count | number:'1.2-2'|| "Not Available"}}</td>
+              </tr>
+              <tr>
+                <td>Total Agent Value: </td>
+                <td style="font-weight: 600;"> ₦ {{total_agent_value | number:'1.2-2' || "Not Available"}}</td>
+              </tr>
+              <tr>
+                <td>Total Agent Volume:</td>
+                <td style="font-weight: 600;">{{total_agent_volume | number:'1.2-2' || "Not Available"}}</td>
+              </tr>
+              <tr>
+                <td>Average Value Per Wallet:</td>
+                <td style="font-weight: 600;"> ₦ {{average_per_value | number:'1.0-0' || "Not Available"}}</td>
+              </tr>
+              <tr>
+                <td>Average Volume Per Wallet:</td>
+                <td style="font-weight: 600;">{{ average_per_volume | number:'1.0-0' || "Not Available"}}</td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card">
+        <div class="card-body">
+          <mdb-spinner spinnerColor="blue" *ngIf="isLoading" class="loader-icon"></mdb-spinner>
+          <table class="table no-header table-borderless table-sm">
+            <tbody class="no-change" *ngIf="isLoading == false">
+              <tr>
+                <td>Total Volume Of Active Wallet: </td>
+                <td style="font-weight: 600;">{{ active_agents_volume | number:'1.2-2'|| "Not Available"}}</td>
+              </tr>
+              <tr>
+                <td>Total Value Of Active Wallet: </td>
+                <td style="font-weight: 600;"> ₦ {{ active_agents_value | number:'1.2-2' || "Not Available"}}</td>
+              </tr>
+              <tr>
+                <td>Total Volume Of Inactive Wallet:</td>
+                <td style="font-weight: 600;">{{ inactive_agents_volume | number:'1.2-2' || "Not Available"}}</td>
+              </tr>
+              <tr>
+                <td>Total Value Of Inactive Wallet:</td>
+                <td style="font-weight: 600;"> ₦ {{inactive_agents_value | number:'1.0-0' || "Not Available"}}</td>
+              </tr>
+             
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="searchForm">
+    <div class="row mt-5" style="justify-content: flex-end;">
+      <mat-form-field>
+        <mat-select placeholder="Sort By" (selectionChange)="SortType($event)" formControlName="sortOptions">
+          <mat-option *ngFor="let options of sortSelect" [value]="options.value">{{options.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Order By" (selectionChange)="OrderType($event)" formControlName="orderOptions">
+          <mat-option *ngFor="let options of orderSelect" [value]="options.value">{{options.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Search Option" (selectionChange)="type($event)" formControlName="selectOptions">
+          <mat-option *ngFor="let options of optionsSelect" [value]="options.value">{{options.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <input
+        *ngIf="changeinuput !== 'last_txn_date_30' && changeinuput !== 'user_type' && changeinuput !== 'last_txn_date_40' && changeinuput !== 'status'"
+        id="input" type="text" value="" formControlName="selectedOption">
+      <mat-form-field *ngIf="changeinuput == 'user_type'">
+        <mat-select placeholder="Select User Type" (selectionChange)="typeUser($event)"
+          formControlName="selectedOption">
+          <mat-option *ngFor="let options of userType" [value]="options.value">{{options.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="changeinuput == 'status'">
+        <mat-select placeholder="Select Wallet Status" (selectionChange)="walletStats($event)"
+          formControlName="selectedOption">
+          <mat-option *ngFor="let options of walletStatus" [value]="options.value">{{options.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <input *ngIf="changeinuput == 'last_txn_date_30'" id="input" type="date" value="" formControlName="startDate">
+      <input *ngIf="changeinuput == 'last_txn_date_40'" id="input" type="date" value="" formControlName="startDate40">
+
+      <input *ngIf="changeinuput !== 'last_txn_date_30' && changeinuput !== 'last_txn_date_40'" id="input" type="text"
+        value="" formControlName="selectedOption" disabled>
+      <input *ngIf="changeinuput == 'last_txn_date_30'" id="input" type="date" value="" formControlName="endDate">
+      <input *ngIf="changeinuput == 'last_txn_date_40'" id="input" type="date" value="" formControlName="endDate40">
+      <button class="btn-standard" (click)="filters()"> Filter</button>
+      <button class="btn-standard" style="background: white; color: black;" (click)="export()"> Export Data
+        <i *ngIf="isExport == false" class="fa fa-spinner fa-spin"></i>
+      </button>
+    </div>
+  </form>
+
+  <app-pagination *ngIf="data" [total]="total" [start]="serial" [end]="end" [event]="irn"></app-pagination>
+
+
+  <app-table [headers]="headers" [datas]="data" [ordered_data]="ordered_data" [serial]="serial"></app-table>
+
+
+  <app-pagination *ngIf="data" [total]="total" [start]="serial" [end]="end" [event]="irn"></app-pagination>
+</div>

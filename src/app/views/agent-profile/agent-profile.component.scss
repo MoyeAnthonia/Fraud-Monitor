@@ -1,0 +1,145 @@
+.time-head{
+    font-size: 12px;
+    color: #717171;
+}
+
+.time-value{
+    font-size: 14px;
+    color: #18202F;
+}
+
+mdb-card {
+    width: auto;
+  }
+  .card-1 {
+    background: #e8f2ff 0% 0% no-repeat padding-box;
+    border: 2px solid #5478a3;
+    border-radius: 8px;
+    opacity: 1;
+  }
+  .card-2 {
+    background: #f5f5f5 0% 0% no-repeat padding-box;
+    border: 2px solid #01c6b8;
+    border-radius: 8px;
+    opacity: 1;
+  }
+  .card-3 {
+    background: #f2f2f2 0% 0% no-repeat padding-box;
+    border: 2px solid #0f344a;
+    border-radius: 8px;
+    opacity: 1;
+  }
+  .card-4 {
+    background: #7676760b 0% 0% no-repeat padding-box;
+    border: 2px solid #7e7e7e;
+    border-radius: 8px;
+    opacity: 1;
+  }
+  .card-5 {
+    background: #7b16040d 0% 0% no-repeat padding-box;
+    border: 2px solid #7b1603;
+    border-radius: 8px;
+    opacity: 1;
+  }
+  .summary-value {
+    font-size: 16px;
+    font-family: "Montserrat", sans-serif;
+    // font: normal normal normal 20px/24px "Montserrat", sans-serif;
+    letter-spacing: 0px;
+    color: #183879;
+    opacity: 1;
+    font-weight: 600;
+    text-align: center;
+  }
+  .summary-text {
+    font-size: 16px;
+    font-family: "Montserrat", sans-serif;
+    // font: normal normal normal 23px/28px "Montserrat", sans-serif;
+    letter-spacing: 0px;
+    color: #152c5b;
+    opacity: 1;
+    text-align: center;
+  }
+  .summary-label {
+    font-size: 14px;
+    font-family: "Montserrat", sans-serif;
+    // font: normal normal normal 20px/24px "Montserrat", sans-serif;
+    letter-spacing: 0px;
+    color: #848484;
+    opacity: 1;
+  }
+  .card {
+    background: #fcfcfc 0% 0% no-repeat padding-box;
+    border: 1px solid #e1e1e1;
+    border-radius: 13px;
+    opacity: 1;
+    width: inherit;
+  }
+  .custom-select {
+    width: 153px;
+    height: 33px;
+    background: #f2f2f2;
+    border: 1px solid #183879;
+    border-radius: 6px;
+    opacity: 1;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    font-family: "Montserrat", sans-serif;
+    line-height: 14px;
+    letter-spacing: 0px;
+    color: #203562;
+    transition: transform 0.2s;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: 0.5s ease;
+  }
+
+  .content{
+      font-size: 18px;
+      color: #253A66;
+      font-weight: 600;
+  }
+
+  .header{
+    color: #969696;
+    margin-bottom: 0.5rem
+  }
+
+  .sub-header{
+    font-size: 14px;
+      color: #969696;
+      font-weight: 600;
+  }
+
+  .sub-content{
+    color: #253A66;
+    font-weight: 600;
+  }
+
+  .card-wrapper{
+    display: block;
+    height: 46rem;
+    overflow-y: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    white-space: nowrap;
+  }
+
+  .flex-header{
+    justify-content: flex-end;
+  }
+  .trade-btn{
+    background: #253A66;
+    color: white;
+    border: none;
+    font-size: 15px;
+  }

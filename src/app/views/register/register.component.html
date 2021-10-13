@@ -1,0 +1,63 @@
+<section class="intro intro-2 ">
+  <div class="full-bg-img  mask flex-center">
+    <div class="container-fluid">
+      <div class="card pt-5">
+        <div class="row mx-0 py-3">
+          <div class="col-lg-6 mx-0">
+            <input #firstname type="text" autofill="off" autocomplete="off" class="form-control reset"
+              placeholder="First Name">
+            <span *ngIf="error" class="text-danger">{{errors.firstname}}</span>
+          </div>
+          <div class="col-lg-6 mx-0">
+            <input #lastname type="text" autofill="off" autocomplete="off" class="form-control reset"
+              placeholder="Last Name">
+            <span *ngIf="error" class="text-danger">{{errors.last_detail}} {{errors.lastname}}</span>
+          </div>
+        </div>
+
+        <div class="row mx-0 py-3">
+          <div class="col-lg-6 mx-0">
+            <select [disabled]="dept2 != 'risk_man'" [value]="dept2" #dept class="form-control d-block reset">
+              <option disabled [value]=default selected>Choose Department</option>
+              <option *ngFor="let row of optionsSelect" [value]="row.value">{{row.label}}
+              </option>
+            </select>
+            <span *ngIf="error" class="text-danger">{{errors.dept}}</span>
+          </div>
+          <div class="col-lg-6 mx-0">
+            <input #email type="email" autofill="off" autocomplete="off" class="form-control" placeholder="Email">
+            <span *ngIf="error" class="text-danger">{{errors.email_detail}} {{errors.email}} {{errors.isItex}}</span>
+          </div>
+
+        </div>
+
+        <div class="row mx-0 py-3">
+          <div class="col-lg-6 mx-0">
+            <input #password type="password" autofill="off" autocomplete="off" class="form-control" placeholder="Password">
+            <span *ngIf="error" class="text-danger">{{errors.password}} {{errors.length}}</span>
+          </div>
+          <div class="col-lg-6 mx-0">
+            <input #password2 type="password" autofill="off" autocomplete="off" class="form-control" placeholder="Confirm Password">
+            <span *ngIf="error" class="text-danger">{{errors.co_password}}</span>
+          </div>
+        </div>
+
+        <div
+        class="col-lg-2 row mx-0 py-3"
+        style="align-items: end;">
+        <mdb-checkbox #lead class="no-padding"></mdb-checkbox>
+        <p>Lead of Department</p>
+    </div>
+
+        <div class="text-center pb-3 row" style="justify-content: center;">
+          <button class="btn btn-style d-block w-25 btn-ud btn-lg waves-effect waves-light mx-0 mt-3"
+            mdbWavesEffect (click)="register(firstname.value, lastname.value, dept.value, email.value, password.value, password2.value, lead.checked)">
+            Register 
+            <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

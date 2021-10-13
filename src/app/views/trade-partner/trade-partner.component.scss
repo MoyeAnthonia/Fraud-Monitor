@@ -1,0 +1,36 @@
+.time-head{
+    font-size: 0.75rem;
+    color: #717171;
+}
+
+.time-value{
+    font-size: 0.875rem;
+    color: #18202F;
+}
+.export-btn{
+    border: 0.063rem solid #253A66;
+    color: #253A66;
+    background: transparent;
+}
+.example-form-field {
+    margin: 0 8px 16px 0;
+  }
+  .card{
+    border: 1px solid lightgrey;
+    background: #F2F2F2;
+    height: 13rem;
+  }
+  .loader-icon{
+    position: absolute;
+    right: 45%;
+    margin-top: 3rem;
+  }
+  
+  .table tr,.table td {
+    height: 35px;
+ }
+ 
+ .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th
+ {
+   padding:0; 
+ }

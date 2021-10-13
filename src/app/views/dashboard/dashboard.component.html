@@ -1,0 +1,276 @@
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col status-bar no-click">
+      <mdb-card style="border: none;">
+        <mdb-card-body [style.height.rem]="'9'" [style.padding]="'0'" class="card-1">
+          <div class="pt-4 pb-2" [style.text-align]="'center'">
+            <div class="summary-text"> Total Wallet</div>
+            <div *ngIf="loaders[1] != undefined" class="container summary-value">{{status.total_count || 0}}</div>
+           
+            <mdb-spinner *ngIf="loaders[1] == undefined" spinnerColor="blue"></mdb-spinner>
+          </div>
+          <div class="trans-text">Total Transactions
+            <i class="vol-text">Volume</i>
+          </div>
+          <div class="trans-value" *ngIf="loading == false"> ₦ {{status.total_value}}
+            <i class="vol-value">{{status.total_volume}}</i>
+          </div> 
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+    <div (click)="changeStatus('active')" class="col status-bar"
+      mdbTooltip="Wallets with transactions in the last two weeks" placement="top">
+      <mdb-card style="border: none;">
+        <mdb-card-body [style.height.rem]="'9'" [style.padding]="'0'" class="card-2">
+          <div class="pt-4 pb-2" [style.text-align]="'center'">
+            <div class="summary-text"> Active Wallet</div>
+            <div *ngIf="loaders[1] != undefined" class="container summary-value">{{status.active_count || 0}}</div>
+            <mdb-spinner *ngIf="loaders[1] == undefined" spinnerColor="blue"></mdb-spinner>
+
+          </div>
+          <div class="trans-text">Total Transactions
+                  <i class="vol-text">Volume</i>
+                </div>
+                <div class="trans-value" *ngIf="loading == false"> ₦ {{status.active_value}}
+                  <i class="vol-value">{{status.active_volume}}</i>
+                </div> 
+          <button class="view-button">Tap To View More</button>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+    <div (click)="changeStatus('inactive')" class="col status-bar"
+      mdbTooltip="Wallets with no transactions in the last two weeks" placement="top">
+      <mdb-card style="border: none;">
+        <mdb-card-body [style.height.rem]="'9'" [style.padding]="'0'" class="card-3">
+          <div class="pt-4 pb-2" [style.text-align]="'center'">
+            <div class="summary-text"> Inactive Wallet</div>
+            <div *ngIf="loaders[1] != undefined" class="container summary-value">{{status.inactive_count || 0}}</div>
+           
+            <mdb-spinner *ngIf="loaders[1] == undefined" spinnerColor="blue"></mdb-spinner>
+
+          </div>
+          <div class="trans-text">Total Transactions
+            <i class="vol-text">Volume</i>
+          </div>
+          <div class="trans-value" *ngIf="loading == false">₦ {{status.inactive_value}}
+            <i class="vol-value">{{status.inactive_volume}}</i>
+          </div> 
+          <button class="view-button">Tap To View More</button>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+    <div (click)="changeStatus('invalid')" class="col status-bar" mdbTooltip="Wallets with suspicious emails"
+      placement="top">
+      <mdb-card style="border: none;">
+        <mdb-card-body [style.height.rem]="'9'" [style.padding]="'0'" class="card-4">
+          <div class="pt-4 pb-2" [style.text-align]="'center'">
+            <div class="summary-text"> Invalid Wallet</div>
+            <div *ngIf="loaders[1] != undefined" class="container summary-value">{{status.invalid_count || 0}}</div>
+            <mdb-spinner *ngIf="loaders[1] == undefined" spinnerColor="blue"></mdb-spinner>
+
+          </div>
+          <div class="trans-text">Total Transactions
+            <i class="vol-text">Volume</i>
+          </div>
+          <div class="trans-value" *ngIf="loading == false">₦ {{status.invalid_value}}
+            <i class="vol-value">{{status.invalid_volume}}</i>
+          </div> 
+          <button class="view-button">Tap To View More</button>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+    <div (click)="changeStatus('not_in_use')" class="col status-bar"
+      mdbTooltip="Wallets that never performed transactions" placement="top">
+      <mdb-card style="border: none;">
+        <mdb-card-body [style.height.rem]="'9'" [style.padding]="'0'" class="card-5">
+          <div class="pt-4 pb-2" [style.text-align]="'center'">
+            <div class="summary-text"> Wallet Not In Use</div>
+            <div *ngIf="loaders[1] != undefined" class="container summary-value">{{status.not_in_use_count || 0}}</div>
+            <mdb-spinner *ngIf="loaders[1] == undefined" spinnerColor="blue"></mdb-spinner>
+
+          </div>
+          <div class="trans-text">Total Transactions
+            <i class="vol-text">Volume</i>
+          </div>
+          <div class="trans-value" *ngIf="loading == false"> ₦ {{status.not_in_use_value}}
+            <i class="vol-value">{{status.not_in_use_volume}}</i>
+          </div> 
+          <button class="view-button">Tap To View More</button>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+
+  </div>
+  <br>
+
+  <div class="row mt-4">
+    <div class="col-lg-8 col-md-6 col-sm-6 col-xs-12">
+
+      <div class="card">
+        <div class="card-body" [style.height.rem]="'36'">
+          <label class="summary-text" style="font-size:0.875rem">Activity Chart</label>
+          <div style="float: right;">
+            <select [value]="date" class="browser-default custom-select" (change)="switchPeriod($event)">
+              <option disabled value="">Year</option>
+              <option *ngFor="let year of years" [value]="year">{{year}}</option>
+            </select>
+          </div>
+          <br>
+
+          <div *ngIf="loaders[2] != undefined" class="container" style="display: block">
+            <canvas mdbChart style="width: 95%; overflow: auto; height: 31.25rem" [chartType]="chartType"
+              [datasets]="chartDatasets" [labels]="chartLabels" [colors]="chartColors" [options]="chartOptions"
+              [legend]="true" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+            </canvas>
+
+
+          </div>
+          <div *ngIf="loaders[2] == undefined" class="text-center" [style.padding-top]="'10%'">
+            <mdb-spinner spinnerColor="blue"></mdb-spinner>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+      <div class="card">
+        <div class="card-body" [style.height.rem]="'36'">
+          <div class="row mx-0" [style.justify-content]="'space-between'">
+            <label class="summary-label">Suspected Wallet</label>
+            <input type="text" (keyup)="searchWallet($event)" placeholder="Search Wallet ID">
+          </div>
+
+          <div *ngIf="loaders[0] != undefined" class="table-wrapper mt-2 mx-2">
+            <table class="table table-hover mb-0 border-space">
+
+              <tbody *ngIf="loaders[0] == true">
+                <tr (click)="setDetails(data); detailsModal.show()" *ngFor="let data of datas; let i = index">
+                  <td *ngFor="let order of ordered_data; let j = index">
+                    <div>
+                      {{headers[j]}}
+                    </div>
+                    <div>
+                      {{data[order] || 'N/A'}}
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+
+
+              <tbody *ngIf="loaders[0] == false">
+                <tr>
+                  <td>
+                    <div class="text-center">
+                      No Data Available
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <app-pagination *ngIf="datas" [total]="total" [start]="serial" [end]="end" [event]="'Agent-Filter'">
+            </app-pagination>
+
+          </div>
+
+          <div *ngIf="loaders[0] == undefined" class="text-center" [style.padding-top]="'20%'">
+            <mdb-spinner spinnerColor="blue"></mdb-spinner>
+          </div>
+
+        </div>
+      </div>
+
+      <div mdbModal #detailsModal="mdbModal" class="modal fade" style=" overflow: auto" id="frameModalTop" tabindex="-1"
+        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+        [config]="{backdrop: false, ignoreBackdropClick: true}">
+
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+
+          <div class="modal-content">
+
+            <!--Header-->
+            <div class="modal-header">
+              <p>Suspected Wallet Threat</p>
+              <button type="button" class="close" aria-label="Close" data-dismiss="modal" (click)="detailsModal.hide();"
+                mdbWavesEffect>x</button>
+            </div>
+            <!--Body-->
+            <div class="modal-body px-0" style="justify-content: space-evenly;">
+
+              <div class="row col-lg-12 mt-4 mx-0">
+                <div class="col-lg-4">
+                  Wallet ID
+                </div>
+                <div class="col-lg-4" [style.border-top]="'0.063rem dashed'" [style.margin-top.rem]="'0.7'">
+
+                </div>
+                <div (click)="viewAgent(details.wallet)" class="col-lg-4 wallet">
+                  <div class="row content">
+                    {{details.wallet}}
+                    <div class="triangle-right"></div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row col-lg-12 mt-4 mx-0">
+                <div class="col-lg-4">
+                  Agent Name
+                </div>
+                <div class="col-lg-4" [style.border-top]="'0.063rem dashed'" [style.margin-top.rem]="'0.7'">
+
+                </div>
+                <div class="col-lg-4">
+                  {{(details.name || "Loading...") | titlecase}}
+                </div>
+
+              </div>
+              <div class="row col-lg-12 mt-4 mx-0">
+                <div class="col-lg-4">
+                  Transaction Value
+                </div>
+                <div class="col-lg-4" [style.border-top]="'0.063rem dashed'" [style.margin-top.rem]="'0.7'">
+
+                </div>
+                <div class="col-lg-4">
+                  {{details.amount}}
+                </div>
+
+              </div>
+              <!-- <div class="row col-lg-12 mt-4 mx-0">
+                <div class="col-lg-4">
+                  Version of transaction
+                </div>
+                <div class="col-lg-4" [style.border-top]="'1px dashed'" [style.margin-top.rem]="'0.7'">
+
+                </div>
+                <div class="col-lg-4">
+                  Vas 3.0
+                </div>
+
+              </div> -->
+              <div class="row col-lg-12 mt-4 mx-0">
+                <div class="col-lg-4">
+                  Transaction Date
+                </div>
+                <div class="col-lg-4" [style.border-top]="'0.063rem dashed'" [style.margin-top.rem]="'0.7'">
+
+                </div>
+                <div class="col-lg-4">
+                  {{details.txn_date}}
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,49 @@
+.round-btn{
+    border-radius: 50%;
+    border: 1px solid #95C5ED;
+    width: 1.563rem;
+    height: 1.563rem;
+    background: transparent;
+}
+
+.round-btn.inactive{
+    border: 0.063rem solid #D1D1D1 !important;
+}
+
+
+
+.triangle-right {
+    width: 0;
+    height: 0;
+    border-top: 0.438rem solid transparent;
+    border-left: 0.5rem solid #95C5ED;
+    border-bottom: 0.438rem solid transparent;
+    margin-left: 0.188rem
+  }
+
+  .triangle-right.inactive{
+    border-left: 0.5rem solid  #D1D1D1 !important;
+  }
+
+
+  
+  .triangle-left {
+    width: 0;
+    height: 0;
+    border-top: 0.438rem solid transparent;
+    border-right: 0.5rem solid #95C5ED;
+    border-bottom: 0.438rem solid transparent;
+  }
+
+  .triangle-left.inactive{
+    border-right: 0.5rem solid  #D1D1D1 !important;
+  }
+
+  .table td{
+    padding: 0.3rem
+  }
+
+  .page-id{
+    color: #969696;
+    font-size: 0.938rem;
+  }

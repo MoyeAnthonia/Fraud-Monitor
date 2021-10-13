@@ -1,0 +1,38 @@
+<!--Navbar-->
+<mdb-navbar SideClass="navbar navbar-expand-lg fixed-top" [containerInside]="false">
+
+  <!-- Navbar brand -->
+  <small>Home</small> |
+  <mdb-navbar-brand class="row mx-0" [style.align-items]="'center'">
+    <a *ngIf="!isHome" class="navbar-brand mr-1 nav-header" (click)="goBack()"s>
+      <div class="triangle-left" ></div>
+    </a>
+    <a class="navbar-brand mr-0 nav-header" (click)="goBack()">{{isHome ? "Home": "Back"}}</a>
+    <p class="navbar-brand mb-0 mr-1"> |</p>
+    <p class="navbar-brand mb-0">{{nav}}</p>
+  </mdb-navbar-brand>
+
+  <!-- Collapsible content -->
+  <links>
+
+    <!-- Links -->
+    <ul class="navbar-nav ml-auto">
+
+      <!-- Dropdown -->
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+          <mdb-icon fas icon="user"></mdb-icon>Account<span class="caret"></span></a>
+        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+          <a *ngIf="is_lead" class="dropdown-item waves-light" mdbWavesEffect href="/register">Register User</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect href="/update">Update Details</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect (click)="logout()">Log out</a>
+        </div>
+      </li>
+
+    </ul>
+    <!-- Links -->
+  </links>
+  <!-- Collapsible content -->
+
+</mdb-navbar>
+<!--/.Navbar-->

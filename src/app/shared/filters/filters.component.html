@@ -1,0 +1,19 @@
+<div class="row mx-0">
+
+  <div class="dropdown" mdbDropdown>
+
+    <select (change)="type($event)" class="browser-default d-block" [(ngModel)]="searchName" style="height: 29px;
+    width: 131px;">
+      <option *ngFor="let options of optionsSelect"  [value]="options.value" selected>{{options.label}}</option>
+    </select>
+  </div>
+
+  <div>
+   <input id="input" [(ngModel)]="search" type="text" placeholder="">
+    </div>
+
+  <div>
+    <button class="btn-standard" (click)="filters()">Filter</button>
+  </div>
+
+</div>

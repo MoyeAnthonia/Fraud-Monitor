@@ -1,0 +1,161 @@
+<div class="container-fluid">
+
+  <div class="row mx-0" style="align-items: baseline;">
+    <p class="mr-2 time-head">Current Time:</p>
+    <p class="time-value" [id]="'timer'">{{date | date : 'yyyy-MM-dd h:mm a'}}</p>
+  </div>
+  <div class="row">
+    <div class="col status-bar no-click">
+      <mdb-card style="border: none;">
+        <mdb-card-body [style.height.rem]="'8'" [style.padding]="'0'" class="card-1">
+          <div class="pt-4 pb-2" [style.text-align]="'center'">
+            <div class="summary-text">Date</div>
+            <div  class="container summary-value">{{dateWallet || "N/A"}}</div>
+          </div>
+                 
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+    <div class="col status-bar">
+      <mdb-card style="border: none;">
+        <mdb-card-body [style.height.rem]="'8'" [style.padding]="'0'" class="card-3">
+          <div class="pt-4 pb-2" [style.text-align]="'center'">
+            <div class="summary-text"> Opening Balance</div>
+            <div  class="container summary-value">{{opening_bals || "N/A" }}</div>
+          </div>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+    <div class="col status-bar">
+      <mdb-card style="border: none;">
+        <mdb-card-body [style.height.rem]="'8'" [style.padding]="'0'" class="card-3">
+          <div class="pt-4 pb-2" [style.text-align]="'center'">
+            <div class="summary-text"> Current Balance</div>
+            <div  class="container summary-value">{{current_bal || "N/A" }}</div>
+          </div>       
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+    <div class="col status-bar">
+      <mdb-card style="border: none;">
+        <mdb-card-body [style.height.rem]="'8'" [style.padding]="'0'" class="card-2">
+          <div class="pt-4 pb-2" [style.text-align]="'center'">
+            <div class="summary-text"> Total Inflow</div>
+            <div  class="container summary-value">{{total_inflow || "N/A" }}</div>      
+          </div>       
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+    <div  class="col status-bar" >
+      <mdb-card style="border: none;">
+        <mdb-card-body [style.height.rem]="'8'" [style.padding]="'0'" class="card-4">
+          <div class="pt-4 pb-2" [style.text-align]="'center'">
+            <div class="summary-text"> Transaction Value</div>
+            <div  class="container summary-value">{{total_txn_value || "N/A" }}</div>
+          </div>
+         </mdb-card-body>
+      </mdb-card>
+    </div>
+    <div class="col status-bar">
+      <mdb-card style="border: none;">
+        <mdb-card-body [style.height.rem]="'8'" [style.padding]="'0'" class="card-5">
+          <div class="pt-4 pb-2" [style.text-align]="'center'">
+            <div class="summary-text"> Transaction Volume</div>
+            <div  class="container summary-value">{{txn_vol || "N/A" }}</div>
+          </div>
+                
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </div>
+  <br>
+  <!-- <div class="row">
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <mdb-spinner spinnerColor="blue" *ngIf="isLoading" class="loader-icon"></mdb-spinner>
+          <table class="table no-header table-borderless table-sm">
+            <tbody class="no-change" >
+              <tr>
+                <td>Date: </td>
+                <td style="font-weight: 600;">{{ dateWallet || "Not Available"}}</td>
+              </tr>
+              <tr> 
+                <td> Opening Balance: </td>
+                <td style="font-weight: 600;"> {{opening_bals || "Not Available"}}</td>
+              </tr>
+              <tr>
+                <td> Current Balance:</td>
+                <td style="font-weight: 600;"> {{current_bal || "Not Available"}}</td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <mdb-spinner spinnerColor="blue" *ngIf="isLoading" class="loader-icon"></mdb-spinner>
+          <table class="table no-header table-borderless table-sm">
+            <tbody class="no-change" *ngIf="isLoading == false">
+              <tr> 
+                <td>Total Inflow: </td>
+                <td style="font-weight: 600;"> {{ total_inflow || "Not Available"}}</td>
+              </tr>
+              <tr>
+                <td>Total Transaction Value: </td>
+                <td style="font-weight: 600;"> {{ total_txn_value  || "Not Available"}}</td>
+              </tr>
+              <tr>
+                <td>Transaction Volume:</td>
+                <td style="font-weight: 600;">{{ txn_vol || "Not Available"}}</td>
+              </tr>
+             
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <form [formGroup]="searchForm">
+    <div class="row mt-5" style="justify-content: flex-end;">
+      <mat-form-field>
+        <mat-select placeholder="Sort By" (selectionChange)="SortType($event)" formControlName="sortOptions">
+          <mat-option *ngFor="let options of sortSelect" [value]="options.value">{{options.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Order By" (selectionChange)="OrderType($event)" formControlName="orderOptions">
+          <mat-option *ngFor="let options of orderSelect" [value]="options.value">{{options.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Search Option" (selectionChange)="type($event)" formControlName="selectOptions">
+          <mat-option *ngFor="let options of optionsSelect" [value]="options.value">{{options.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>    
+
+      <input id="input" type="date" value="" formControlName="startDate">
+      <input id="input" type="date" value="" formControlName="endDate">
+
+      <button class="btn-standard" (click)="filters()"> Filter</button>
+      <button class="btn-standard" style="background: white; color: black;" (click)="export()"> Export Data
+        <i *ngIf="isExport == false" class="fa fa-spinner fa-spin"></i>
+      </button>
+    </div>
+  </form>
+
+  <app-pagination *ngIf="data" [total]="total" [start]="serial" [end]="end" [event]="irn"></app-pagination>
+
+
+  <app-table [headers]="headers" [datas]="data" [ordered_data]="ordered_data" [serial]="serial"></app-table>
+
+
+  <app-pagination *ngIf="data" [total]="total" [start]="serial" [end]="end" [event]="irn"></app-pagination>
+</div>

@@ -1,0 +1,272 @@
+<div class="container-fluid">
+
+  <div class="row mx-0" style="align-items: baseline;">
+    <p class="mr-2 time-head">Current Time:</p>
+    <p class="time-value" [id]="'timer'">{{date | date : 'yyyy-MM-dd h:mm a'}}</p>
+  </div>
+
+  <div class="row mx-0 my-4" style="justify-content: flex-end;">
+    <app-filters [filter]="'wallet'" [event]="'Agent-Filter'"></app-filters>
+    <!-- <app-excel-export [datas]="raw_data" [filename]="status"></app-excel-export> -->
+  </div>
+
+  <!-- <label class="summary-text" style="font-size:0.875rem">Agent Profile</label> -->
+  <div class="row mt-4">
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+      <div class="card">
+        <div class="card-body" [style.height.rem]="'53'">
+
+          <div *ngIf="loaders[0] == true" #container class="card-wrapper">
+            <div class="row col-lg-12 my-1">
+              <div class="col-lg-6" [style.min-width.rem]="12.5">
+                <p class="header">Agent Name</p>
+                <p class="content">{{data.name | titlecase}}</p>
+              </div>
+              <div [ngClass]="{'row flex-header mx-0': container.offsetWidth > 450}" class="col-lg-6">
+                <div [ngClass]="{'text-right': container.offsetWidth > 450}">
+                  <p class="header">Rank</p>
+                  <p class="content">{{data.top_20? 'Top 20' : 'N/A'}}</p>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row col-lg-12 my-1">
+              <div class="col-lg-6" [style.min-width.rem]="12.5">
+                <p class="header">Email</p>
+                <p class="content">{{data.email || 'N/A'}}</p>
+              </div>
+              <div [ngClass]="{'row flex-header mx-0': container.offsetWidth > 450}" class="col-lg-6">
+                <div [ngClass]="{'text-right': container.offsetWidth > 450}">
+                  <p class="header">User Type</p>
+                  <p class="content">{{(data.user_type | titlecase) || 'N/A'}}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row col-lg-12 my-1">
+              <div class="col-lg-6" [style.min-width.rem]="12.5">
+                <p class="header">Wallet ID</p>
+                <p class="content">{{data.wallet}}</p>
+              </div>
+              <div [ngClass]="{'row flex-header mx-0': container.offsetWidth > 450}" class="col-lg-6">
+                <div [ngClass]="{'text-right': container.offsetWidth > 450}">
+                  <p class="header">Terminal ID</p>
+                  <p class="content">{{data.terminal || 'N/A'}}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row col-lg-12 my-1">
+              <div class="col-lg-6" [style.min-width.rem]="12.5">
+                <p class="header">Trade Partner &nbsp; <button class="trade-btn" (click)="viewPartner(data.tp_irn)">View</button></p> 
+                <p class="content">{{data.trade_partner}}</p>
+              </div>
+
+              <div [ngClass]="{'row flex-header mx-0': container.offsetWidth > 450}" class="col-lg-6">
+                <div [ngClass]="{'text-right': container.offsetWidth > 450}">
+                  <p class="header">Phone</p>
+                  <p class="content">{{data.phone || 'N/A'}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6" [style.min-width.rem]="12.5">
+              <p class="header">NIP &nbsp; <button class="trade-btn" (click)="viewNipTransaction(data.wallet)">View</button></p> 
+            </div>
+            <div class="row col-lg-12 my-1">
+              <div class="col-lg-6" [style.min-width.rem]="12.5">
+                <p class="header">Address</p>
+                <p class="content">{{data.address || 'N/A'}}</p>
+              </div>
+              <div [ngClass]="{'row flex-header mx-0': container.offsetWidth > 450}" class="col-lg-6">
+                <div [ngClass]="{'text-right': container.offsetWidth > 450}">
+                  <p class="header">City</p>
+                  <p class="content">{{data.city || 'N/A'}}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row col-lg-12 my-1">
+              <div class="col-lg-6" [style.min-width.rem]="12.5">
+                <p class="header">Region</p>
+                <p class="content">{{data.region || 'N/A'}}</p>
+              </div>
+              <div [ngClass]="{'row flex-header mx-0': container.offsetWidth > 450}" class="col-lg-6">
+                <div [ngClass]="{'text-right': container.offsetWidth > 450}">
+                  <p class="header">State</p>
+                  <p class="content">{{data.state || 'N/A'}}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row col-lg-12 my-1">
+              <div class="col-lg-6">
+                <p class="header">Date Created</p>
+                <p class="content">{{(data.acct_created | date : 'yyy-MM-dd hh:mm:ss') || 'NA'}}</p>
+              </div>
+              <div [ngClass]="{'row flex-header mx-0': container.offsetWidth > 450}" class="col-lg-6">
+                <div [ngClass]="{'text-right': container.offsetWidth > 450}">
+                  <p class="header">Logged Issues</p>
+                  <a (click)="setIssues(data.issues); issuesModal.show()" class="content btn-standard text-white mx-0 px-2">View</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="row col-lg-12 my-1 mx-0">
+              <p class="header">Daily Transactions</p>
+              <div class="row col-lg-12">
+                <div class="col-lg-4 pl-0" [style.min-width.rem]="12.5">
+                  <p class="sub-header mb-1">Value</p>
+                  <p class="sub-content">{{data.daily_value |  number: "1.2-2" || 0}}</p>
+                </div>
+                <div class="col-lg-4 pl-0" [style.min-width.rem]="12.5">
+                  <p class="sub-header mb-1">Volume</p>
+                  <p class="sub-content">{{data.daily_volume || 0}}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row col-lg-12 my-1 mx-0">
+              <p class="header">Transaction Made on VAS 3.0</p>
+              <div class="row col-lg-12">
+                <div class="col-lg-4 pl-0" [style.min-width.rem]="12.5">
+                  <p class="sub-header mb-1">Value</p>
+                  <p class="sub-content">{{data.txn_value_30 || 0}}</p>
+                </div>
+                <div class="col-lg-4 pl-0" [style.min-width.rem]="12.5">
+                  <p class="sub-header mb-1">Volume</p>
+                  <p class="sub-content">{{data.txn_volume_30 || 0}}</p>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row col-lg-12 my-1 mx-0">
+              <p class="header">Transaction Made on VAS 4.0</p>
+
+              <div class="row col-lg-12">
+                <div class="col-lg-4 pl-0" [style.min-width.rem]="12.5">
+                  <p class="sub-header mb-1">Value</p>
+                  <p class="sub-content">{{data.txn_value_40 || 0}}</p>
+                </div>
+                <div class="col-lg-4 pl-0" [style.min-width.rem]="12.5">
+                  <p class="sub-header mb-1">Volume</p>
+                  <p class="sub-content">{{data.txn_volume_40 || 0}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="loaders[0] == false" #container class="card-wrapper text-center">
+            No Data Available
+          </div>
+
+          <div *ngIf="loaders[0] == undefined" class="text-center" [style.padding-top]="'20%'">
+            <mdb-spinner spinnerColor="blue"></mdb-spinner>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-8 col-md-6 col-sm-6 col-xs-12">
+      <div class="card">
+        <div class="card-body" [style.height.rem]="'26'">
+          <label class="summary-text" style="font-size:0.875rem">Performance Chart</label>
+          <div style="float: right;">
+            <select [value]="date2" class="browser-default custom-select" (change)="switchPeriod($event)">
+              <option disabled value="">Year</option>
+              <option *ngFor="let year of years" [value]="year">{{year}}</option>
+            </select>
+          </div>
+          <br>
+
+          <div *ngIf="loaders[1] != undefined" class="container" style="display: block">
+            <canvas mdbChart style="width: 95%; overflow: auto; height: 21.25rem" [chartType]="chartType" [datasets]="chartDatasets" [labels]="chartLabels"
+              [colors]="chartColors" [options]="chartOptions" [legend]="true" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+            </canvas>
+          </div>
+
+          <div *ngIf="loaders[1] == undefined" class="text-center" [style.padding-top]="'10%'">
+            <mdb-spinner spinnerColor="blue"></mdb-spinner>
+          </div>
+
+        </div>
+      </div>
+   <br>
+      <div class="card">
+        <div class="card-body" [style.height.rem]="'26'">
+          <label class="summary-text" style="font-size:0.875rem">Funding Chart</label>
+          <div style="float: right;">
+            <select [value]="date2" class="browser-default custom-select" (change)="switchPeriod($event)">
+              <option disabled value="">Year</option>
+              <option *ngFor="let year of years" [value]="year">{{year}}</option>
+            </select>
+          </div>
+          <br>
+  
+          <div *ngIf="loaders[1] != undefined" class="container" style="display: block">
+            <canvas mdbChart style="width: 95%; overflow: auto; height: 21.25rem" [chartType]="chartType" [datasets]="chartDatasets2" [labels]="chartLabels"
+              [colors]="chartColors2" [options]="chartOptions" [legend]="true" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+            </canvas>
+          </div>
+          <div *ngIf="loaders[1] == undefined" class="text-center" [style.padding-top]="'10%'">
+            <mdb-spinner spinnerColor="blue"></mdb-spinner>
+          </div>
+  
+        </div>
+      </div>
+   
+    </div>
+    
+     </div>
+
+  <div mdbModal #issuesModal="mdbModal" class="modal fade" style=" overflow: auto" id="frameModalTop" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
+
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+
+      <div class="modal-content">
+        <button type="button" class="close" aria-label="Close" data-dismiss="modal" (click)="issuesModal.hide();" mdbWavesEffect>x</button>
+        <!--Header-->
+        <div class="modal-header d-flex ">
+          <p>Logged Issues</p>
+
+        </div>
+        <!--Body-->
+        <div class="modal-body" style="justify-content: space-evenly;">
+
+          <div *ngIf="issues.length">
+            <table class="table table-hover mb-0 border-space">
+
+              <tbody *ngIf="loaders[0] == true">
+                <tr>
+                  <th *ngFor="let header of headers; let j = index">
+                    {{header}}
+                  </th>
+                </tr>
+
+                <tr *ngFor="let issue of issues; let i = index">
+                  <td *ngFor="let order of ordered_data; let j = index">
+
+                    <div>
+                      {{issue[order] || 'N/A'}}
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+          </div>
+
+          <div *ngIf="!issues.length" class="text-center">
+            No Issues found
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</div>

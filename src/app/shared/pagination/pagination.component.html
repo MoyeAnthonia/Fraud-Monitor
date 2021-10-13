@@ -1,0 +1,28 @@
+  <!--Bottom Table UI-->
+  <div class="d-flex justify-content-between " style="overflow:auto;">
+    <!--Pagination -->
+    <nav>
+        <div class="table-responsive mt-3">
+            <table class="table table-borderless">
+                    <tr class="row mx-0 no-change" style="align-items: baseline;">
+                      <td class="page-id">
+                        {{start}}-{{end}} of {{total}}
+                      </td>
+                      <td>
+                        <button [ngClass]="{'inactive': start <= 1}" [disabled]="start <= 1"class="round-btn waves-light" (click)="state = 'previous'; changePage();">
+                         <div [ngClass]="{'inactive': start <= 1}" class="triangle-left" ></div>
+                        </button>
+                      </td>
+                      <td>
+                        <button [ngClass]="{'inactive': end == total}" [disabled]="end == total" class="round-btn waves-light"  (click)="state = 'next'; changePage();">
+                          <div [ngClass]="{'inactive': start <= 1}" class="triangle-right"></div>
+                        </button>
+                      </td>
+
+                    </tr>
+            </table>  
+        </div>
+    </nav>
+    <!--/Pagination -->
+</div>
+<!--Bottom Table UI-->
